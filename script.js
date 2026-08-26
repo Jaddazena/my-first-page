@@ -75,6 +75,33 @@ function formatNewsDate(dateText) {
   return Number.isNaN(date.getTime()) ? "日時不明" : date.toLocaleString("ja-JP", { dateStyle: "medium", timeStyle: "short" });
 }
 
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>'"]/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;"
+  })[character]);
+}
+
+function summarizeWithClaude(event) {
+  event.preventDefault();
+  const button = event.currentTarget;
+  const prompt = `次の記事を日本語で、事実関係を変えずに要約してください。\n\nタイトル: ${button.dataset.title}\nURL: ${button.dataset.url}`;
+  const openClaude = () => window.open("https://claude.ai/new", "_blank", "noopener,noreferrer");
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(prompt).then(() => {
+      alert("要約依頼文をコピーしました。Claudeに貼り付けてください。");
+      openClaude();
+    }).catch(openClaude);
+  } else {
+    window.prompt("この依頼文をClaudeに貼り付けてください:", prompt);
+    openClaude();
+  }
+}
+
 async function loadWorldNews() {
   const status = document.querySelector("#news-status");
   const newsList = document.querySelector("#news-list");
@@ -108,8 +135,11 @@ async function loadWorldNews() {
     newsList.innerHTML = articles.map((article) => `
       <article class="news-card">
         <p class="news-meta">${article.domain || "海外メディア"} ・ ${formatNewsDate(article.seendate)}</p>
-        <h2>${article.title}</h2>
-        <a href="${article.url}" target="_blank" rel="noopener noreferrer">記事を読む</a>
+        <h2>${escapeHtml(article.title)}</h2>
+        <div class="news-actions">
+          <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">記事を読む</a>
+          <button class="claude-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">Claudeで要約</button>
+        </div>
       </article>
     `).join("");
     status.textContent = `最終更新: ${new Date().toLocaleString("ja-JP")}（30分ごとに自動更新）`;
@@ -126,6 +156,12 @@ async function loadWorldNews() {
     isNewsLoading = false;
   }
 }
+
+document.addEventListener("click", (event) => {
+  if (event.target.closest(".claude-button")) {
+    summarizeWithClaude({ currentTarget: event.target.closest(".claude-button"), preventDefault: () => {} });
+  }
+});
 
 if (document.querySelector("#news-list")) {
   loadWorldNews();
