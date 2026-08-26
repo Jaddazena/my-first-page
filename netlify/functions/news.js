@@ -15,6 +15,10 @@ function getTag(item, tag) {
   return match ? decodeXml(match[1].trim()) : "";
 }
 
+function getDescription(item) {
+  return getTag(item, "description").replace(/<[^>]+>/g, "").trim();
+}
+
 exports.handler = async () => {
   try {
     const response = await fetch(feedUrl);
@@ -27,6 +31,7 @@ exports.handler = async () => {
       const item = match[1];
       return {
         domain: getTag(item, "source") || "主要メディア",
+        description: getDescription(item),
         seendate: getTag(item, "pubDate"),
         title: getTag(item, "title"),
         url: getTag(item, "link")

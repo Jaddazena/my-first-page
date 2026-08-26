@@ -163,8 +163,9 @@ async function loadWorldNews() {
       <article class="news-card">
         <p class="news-meta">${article.domain || "海外メディア"} ・ ${formatNewsDate(article.seendate)}</p>
         <h2>${escapeHtml(article.title)}</h2>
+        ${article.description ? `<p class="news-excerpt">${escapeHtml(article.description)}</p>` : ""}
         <div class="news-actions">
-          <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">記事を読む</a>
+          <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">続きを読む</a>
           <button class="claude-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">Claudeで要約</button>
           <button class="terms-button" type="button" data-title="${escapeHtml(article.title)}">用語をやさしく説明</button>
         </div>

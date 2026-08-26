@@ -307,6 +307,13 @@ p {
   margin: 10px 0 14px;
 }
 
+.news-excerpt {
+  color: #536368;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 16px;
+}
+
 .news-meta,
 .news-source-note {
   color: var(--muted);
