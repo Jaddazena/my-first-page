@@ -31,6 +31,15 @@
       <a class="back-link" href="index.html">← 初めてのページに戻る</a>
     </footer>
   </main>
-  <script src="script.js?v=full-glossary"></script>
+  <div id="term-modal" class="term-modal" hidden>
+    <div class="term-modal-backdrop" data-close-terms></div>
+    <section class="term-dialog" role="dialog" aria-modal="true" aria-labelledby="term-dialog-title">
+      <button class="term-close" type="button" data-close-terms aria-label="説明を閉じる">×</button>
+      <p class="term-dialog-kicker">QUICK GLOSSARY</p>
+      <h2 id="term-dialog-title">用語をやさしく</h2>
+      <div id="term-dialog-content" class="term-dialog-content"></div>
+    </section>
+  </div>
+  <script src="script.js?v=glossary-modal"></script>
 </body>
 </html>

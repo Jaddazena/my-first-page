@@ -146,12 +146,20 @@ const simpleTermDictionary = {
 function explainTermsWithoutAi(event) {
   event.preventDefault();
   const button = event.currentTarget;
+  const modal = document.querySelector("#term-modal");
+  const content = document.querySelector("#term-dialog-content");
   const normalizedTitle = button.dataset.title.normalize("NFKC");
   const terms = Object.entries(simpleTermDictionary).filter(([term]) => normalizedTitle.includes(term));
-  const message = terms.length
-    ? terms.map(([term, explanation]) => `${term}\n${explanation}`).join("\n\n")
-    : "この見出しには、登録済みの基本用語はありません。";
-  alert(message);
+
+  if (!modal || !content) {
+    return;
+  }
+
+  content.innerHTML = terms.length
+    ? terms.map(([term, explanation]) => `<article class="term-item"><h3>${escapeHtml(term)}</h3><p>${escapeHtml(explanation)}</p></article>`).join("")
+    : "<p class=\"term-empty\">この見出しには、登録済みの基本用語はありません。</p>";
+  modal.hidden = false;
+  document.querySelector(".term-close")?.focus();
 }
 
 async function loadWorldNews() {
@@ -219,6 +227,22 @@ document.addEventListener("click", (event) => {
     summarizeWithClaude({ currentTarget: claudeButton, preventDefault: () => {} });
   } else if (termsButton) {
     explainTermsWithoutAi({ currentTarget: termsButton, preventDefault: () => {} });
+  }
+
+  if (event.target.closest("[data-close-terms]")) {
+    const modal = document.querySelector("#term-modal");
+    if (modal) {
+      modal.hidden = true;
+    }
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    const modal = document.querySelector("#term-modal");
+    if (modal) {
+      modal.hidden = true;
+    }
   }
 });
 
