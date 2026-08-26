@@ -162,8 +162,20 @@ p {
 }
 
 .news-header {
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image: url("https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1800&q=85");
+  background-position: center 42%;
+  background-size: cover;
   color: white;
+  min-height: 190px;
+  position: relative;
+}
+
+.news-header::before {
+  background-color: #10232bd9;
+  content: "";
+  inset: 0;
+  position: absolute;
 }
 
 .news-header-inner {
@@ -173,6 +185,8 @@ p {
   margin: auto;
   max-width: 1080px;
   padding: 18px 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .news-brand {
