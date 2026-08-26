@@ -7,13 +7,24 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="news-page">
+  <header class="news-header">
+    <div class="news-header-inner">
+      <a class="news-brand" href="index.html"><span class="brand-mark">WN</span><span>WORLD / NOW</span></a>
+      <span class="news-date">DAILY BRIEFING</span>
+    </div>
+  </header>
   <main class="news-content">
-    <h1>本日のワールドニュース</h1>
-    <p class="news-description">政治・外交・軍事に関する世界の主要報道</p>
-    <p id="news-status" class="news-status" role="status">ニュースを読み込んでいます...</p>
+    <section class="news-hero">
+      <p class="news-kicker"><span class="live-dot"></span> WORLD DESK</p>
+      <h1>本日の<br><em>ワールドニュース</em></h1>
+      <p class="news-description">政治・外交・軍事。世界の動きを、日本語の見出しで。</p>
+      <p id="news-status" class="news-status" role="status">ニュースを読み込んでいます...</p>
+    </section>
     <section id="news-list" class="news-list" aria-live="polite"></section>
-    <p class="news-source-note">出典: GDELTで取得した、日本語で公開されている国内外の主要メディアの記事。記事の内容は各媒体の原文をご確認ください。</p>
-    <a class="back-link" href="index.html">初めてのページに戻る</a>
+    <footer class="news-footer">
+      <p class="news-source-note">日本語で公開されている国内外の主要メディアの記事をGoogle News RSSから取得しています。記事の内容は各媒体の原文をご確認ください。</p>
+      <a class="back-link" href="index.html">← 初めてのページに戻る</a>
+    </footer>
   </main>
   <script src="script.js"></script>
 </body>

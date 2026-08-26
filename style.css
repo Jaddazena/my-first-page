@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap");
+
 body {
   background-color: #f0f8ff;
   font-family: sans-serif;
@@ -148,68 +150,203 @@ p {
 }
 
 .news-page {
-  background-color: #f4f7fa;
-  padding: 48px 20px;
+  --ink: #182b33;
+  --muted: #6b7779;
+  --paper: #f5f3ee;
+  --line: #d8d9d2;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  padding: 0;
   text-align: left;
+}
+
+.news-header {
+  background: var(--ink);
+  color: white;
+}
+
+.news-header-inner {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  max-width: 1080px;
+  padding: 18px 28px;
+}
+
+.news-brand {
+  align-items: center;
+  color: white;
+  display: flex;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  gap: 10px;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #ef6351;
+  display: flex;
+  font-size: 12px;
+  height: 30px;
+  justify-content: center;
+  letter-spacing: 0;
+  width: 34px;
+}
+
+.news-date,
+.news-kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.news-date {
+  color: #aab7b7;
 }
 
 .news-content {
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1080px;
+  padding: 72px 28px 48px;
 }
 
-.news-content h1 {
-  color: #1d4d68;
-  text-align: center;
+.news-hero {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 40px;
 }
 
-.news-description,
+.news-kicker {
+  color: #ef6351;
+  font-weight: bold;
+  margin: 0 0 18px;
+}
+
+.live-dot {
+  background: #ef6351;
+  border-radius: 50%;
+  display: inline-block;
+  height: 7px;
+  margin-right: 8px;
+  width: 7px;
+}
+
+.news-hero h1 {
+  color: var(--ink);
+  font-family: "Space Grotesk", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: clamp(42px, 7vw, 78px);
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.news-hero h1 em {
+  color: #28745a;
+  font-style: normal;
+}
+
+.news-description {
+  color: var(--muted);
+  font-size: 16px;
+  margin: 22px 0 18px;
+}
+
 .news-status {
-  color: #555555;
-  text-align: center;
+  color: var(--muted);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  margin: 0;
 }
 
 .news-list {
   display: grid;
-  gap: 16px;
-  margin-top: 28px;
+  gap: 0 22px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 10px;
 }
 
 .news-card {
-  background-color: white;
-  border-left: 5px solid #28745a;
-  border-radius: 4px;
-  box-shadow: 0 2px 7px #16304218;
-  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0 30px;
+}
+
+.news-card:nth-child(-n+2) {
+  border-top: 4px solid #28745a;
 }
 
 .news-card h2 {
-  color: #173b4d;
-  font-size: 20px;
-  line-height: 1.5;
-  margin: 8px 0;
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1.65;
+  margin: 10px 0 14px;
 }
 
 .news-meta,
-.original-title,
 .news-source-note {
-  color: #68757b;
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
 }
 
 .news-card a {
-  color: #1769aa;
+  color: #28745a;
+  font-size: 13px;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.news-card a::after {
+  content: "  ↗";
+}
+
+.news-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 50px;
+  padding-top: 24px;
+  text-align: center;
 }
 
 .news-source-note {
-  margin-top: 24px;
-  text-align: center;
+  line-height: 1.8;
+}
+
+.news-footer .back-link {
+  color: var(--ink);
+  margin-top: 20px;
 }
 
 .news-error {
-  color: #a32929;
-  text-align: center;
+  color: #b13f3f;
+  grid-column: 1 / -1;
+  padding: 30px 0;
+}
+
+@media (max-width: 640px) {
+  .news-header-inner,
+  .news-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .news-content {
+    padding-top: 48px;
+  }
+
+  .news-date {
+    display: none;
+  }
+
+  .news-list {
+    grid-template-columns: 1fr;
+  }
+
+  .news-card:nth-child(2) {
+    border-top: 0;
+  }
 }
 
 .jackpot-page {
