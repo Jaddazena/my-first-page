@@ -102,6 +102,23 @@ function summarizeWithClaude(event) {
   }
 }
 
+function explainTermsWithClaude(event) {
+  event.preventDefault();
+  const button = event.currentTarget;
+  const prompt = `次のニュースに出てくる専門用語を、ニュースを初めて読む人にもわかるように説明してください。難しい言葉を避け、各用語を「用語：やさしい説明」の形式で整理してください。\n\n記事タイトル: ${button.dataset.title}\n記事URL: ${button.dataset.url}`;
+  const openClaude = () => window.open("https://claude.ai/new", "_blank", "noopener,noreferrer");
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(prompt).then(() => {
+      alert("専門用語の説明依頼をコピーしました。Claudeに貼り付けてください。");
+      openClaude();
+    }).catch(openClaude);
+  } else {
+    window.prompt("この依頼文をClaudeに貼り付けてください:", prompt);
+    openClaude();
+  }
+}
+
 async function loadWorldNews() {
   const status = document.querySelector("#news-status");
   const newsList = document.querySelector("#news-list");
@@ -139,6 +156,7 @@ async function loadWorldNews() {
         <div class="news-actions">
           <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">記事を読む</a>
           <button class="claude-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">Claudeで要約</button>
+          <button class="terms-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">専門用語をやさしく説明</button>
         </div>
       </article>
     `).join("");
@@ -158,8 +176,13 @@ async function loadWorldNews() {
 }
 
 document.addEventListener("click", (event) => {
-  if (event.target.closest(".claude-button")) {
-    summarizeWithClaude({ currentTarget: event.target.closest(".claude-button"), preventDefault: () => {} });
+  const claudeButton = event.target.closest(".claude-button");
+  const termsButton = event.target.closest(".terms-button");
+
+  if (claudeButton) {
+    summarizeWithClaude({ currentTarget: claudeButton, preventDefault: () => {} });
+  } else if (termsButton) {
+    explainTermsWithClaude({ currentTarget: termsButton, preventDefault: () => {} });
   }
 });
 

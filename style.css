@@ -345,6 +345,23 @@ p {
   background-color: #b95c3e;
 }
 
+.terms-button {
+  background-color: transparent;
+  border: 1px solid #28745a;
+  border-radius: 3px;
+  color: #28745a;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px 10px;
+}
+
+.terms-button:hover,
+.terms-button:focus-visible {
+  background-color: #e4eee8;
+}
+
 .news-card a::after {
   content: "  ↗";
 }
