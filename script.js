@@ -61,7 +61,7 @@ function shareToInstagram(event) {
   }
 }
 
-const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(政治%20OR%20外交%20OR%20軍事)%20sourcelang%3Ajapanese%20(domain%3Anhk.or.jp%20OR%20domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Anikkei.com%20OR%20domain%3Aasahi.com%20OR%20domain%3Ayomiuri.co.jp%20OR%20domain%3Amainichi.jp%20OR%20domain%3Akyodonews.jp)&mode=artlist&maxrecords=20&format=json&sort=HybridRel&timespan=1d";
+const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(politics%20OR%20diplomacy%20OR%20military)%20(domain%3Anhk.or.jp%20OR%20domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Anikkei.com%20OR%20domain%3Aasahi.com%20OR%20domain%3Ayomiuri.co.jp%20OR%20domain%3Amainichi.jp%20OR%20domain%3Akyodonews.jp)&mode=artlist&maxrecords=50&format=json&sort=HybridRel&timespan=1d";
 
 function formatNewsDate(dateText) {
   if (!dateText || dateText.length < 14) {
