@@ -122,7 +122,8 @@ const simpleTermDictionary = {
 function explainTermsWithoutAi(event) {
   event.preventDefault();
   const button = event.currentTarget;
-  const terms = Object.entries(simpleTermDictionary).filter(([term]) => button.dataset.title.includes(term));
+  const normalizedTitle = button.dataset.title.normalize("NFKC");
+  const terms = Object.entries(simpleTermDictionary).filter(([term]) => normalizedTitle.includes(term));
   const message = terms.length
     ? terms.map(([term, explanation]) => `${term}\n${explanation}`).join("\n\n")
     : "この見出しには、登録済みの基本用語はありません。";
