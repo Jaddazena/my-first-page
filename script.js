@@ -62,6 +62,7 @@ function shareToInstagram(event) {
 }
 
 const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(politics%20OR%20diplomacy%20OR%20military)%20(domain%3Anhk.or.jp%20OR%20domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Anikkei.com%20OR%20domain%3Aasahi.com%20OR%20domain%3Ayomiuri.co.jp%20OR%20domain%3Amainichi.jp%20OR%20domain%3Akyodonews.jp)&mode=artlist&maxrecords=50&format=json&sort=HybridRel&timespan=1d";
+let isNewsLoading = false;
 
 function formatNewsDate(dateText) {
   if (!dateText || dateText.length < 14) {
@@ -80,8 +81,17 @@ async function loadWorldNews() {
     return;
   }
 
+  if (isNewsLoading) {
+    return;
+  }
+
+  isNewsLoading = true;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+  status.textContent = "ニュースを読み込んでいます...";
+
   try {
-    const response = await fetch(newsApiUrl);
+    const response = await fetch(newsApiUrl, { signal: controller.signal });
     if (!response.ok) {
       throw new Error("ニュースの取得に失敗しました");
     }
@@ -102,8 +112,16 @@ async function loadWorldNews() {
     `).join("");
     status.textContent = `最終更新: ${new Date().toLocaleString("ja-JP")}（30分ごとに自動更新）`;
   } catch (error) {
-    status.textContent = "ニュースを取得できませんでした。時間をおいて再読み込みしてください。";
-    newsList.innerHTML = `<p class="news-error">${error.message}</p>`;
+    const message = error.name === "AbortError"
+      ? "ニュース配信元から10秒以内に応答がありませんでした。再読み込みしてください。"
+      : "ニュースを取得できませんでした。時間をおいて再読み込みしてください。";
+    status.textContent = message;
+    if (!newsList.children.length) {
+      newsList.innerHTML = `<p class="news-error">${message}</p>`;
+    }
+  } finally {
+    clearTimeout(timeoutId);
+    isNewsLoading = false;
   }
 }
 
