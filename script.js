@@ -68,27 +68,14 @@ async function translateHeadline(headline, language) {
     return headline;
   }
 
-  const languageCodes = {
-    Arabic: "ar",
-    Chinese: "zh",
-    English: "en",
-    French: "fr",
-    German: "de",
-    Italian: "it",
-    Persian: "fa",
-    Portuguese: "pt",
-    Russian: "ru",
-    Spanish: "es",
-    Swahili: "sw",
-    Ukrainian: "uk"
-  };
-  const sourceLanguage = languageCodes[language] || "en";
-
   try {
-    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(headline)}&langpair=${sourceLanguage}|ja`);
+    const response = await fetch("/.netlify/functions/translate", {
+      body: JSON.stringify({ headline, language }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST"
+    });
     const result = await response.json();
-    const translatedText = result.responseData?.translatedText;
-    return translatedText && !translatedText.includes("INVALID SOURCE LANGUAGE") ? translatedText : headline;
+    return result.translation || headline;
   } catch {
     return headline;
   }
