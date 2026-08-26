@@ -61,15 +61,17 @@ function shareToInstagram(event) {
   }
 }
 
-const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(politics%20OR%20diplomacy%20OR%20military)%20(domain%3Anhk.or.jp%20OR%20domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Anikkei.com%20OR%20domain%3Aasahi.com%20OR%20domain%3Ayomiuri.co.jp%20OR%20domain%3Amainichi.jp%20OR%20domain%3Akyodonews.jp)&mode=artlist&maxrecords=50&format=json&sort=HybridRel&timespan=1d";
+const newsApiUrl = "/.netlify/functions/news";
 let isNewsLoading = false;
 
 function formatNewsDate(dateText) {
-  if (!dateText || dateText.length < 14) {
+  if (!dateText) {
     return "日時不明";
   }
 
-  const date = new Date(`${dateText.slice(0, 4)}-${dateText.slice(4, 6)}-${dateText.slice(6, 8)}T${dateText.slice(8, 10)}:${dateText.slice(10, 12)}:${dateText.slice(12, 14)}Z`);
+  const date = dateText.length >= 14 && /^\d{14}$/.test(dateText)
+    ? new Date(`${dateText.slice(0, 4)}-${dateText.slice(4, 6)}-${dateText.slice(6, 8)}T${dateText.slice(8, 10)}:${dateText.slice(10, 12)}:${dateText.slice(12, 14)}Z`)
+    : new Date(dateText);
   return Number.isNaN(date.getTime()) ? "日時不明" : date.toLocaleString("ja-JP", { dateStyle: "medium", timeStyle: "short" });
 }
 
@@ -97,7 +99,7 @@ async function loadWorldNews() {
     }
 
     const data = await response.json();
-    const articles = (data.articles || []).filter((article) => article.language === "Japanese").slice(0, 12);
+    const articles = (data.articles || []).slice(0, 12);
 
     if (!articles.length) {
       throw new Error("表示できるニュースがありません");
