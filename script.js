@@ -102,21 +102,31 @@ function summarizeWithClaude(event) {
   }
 }
 
-function explainTermsWithClaude(event) {
+const simpleTermDictionary = {
+  "NATO": "北大西洋条約機構。ヨーロッパや北米の国々が、みんなで守り合うための組織です。",
+  "ICC": "国際刑事裁判所。戦争犯罪などを犯した個人を裁く国際的な裁判所です。",
+  "外交": "国と国が話し合い、関係を調整することです。",
+  "制裁": "相手の国に経済的な制限をかけ、行動を変えさせようとすることです。",
+  "停戦": "戦争や戦闘をいったん止めることです。",
+  "関税": "外国から商品を輸入するときにかかる税金です。",
+  "非核三原則": "核兵器を持たない、作らない、持ち込ませないという日本の方針です。",
+  "集団的自衛権": "仲のよい国が攻撃されたとき、自分の国が攻撃されていなくても一緒に守る権利です。",
+  "難民": "戦争や迫害から逃れるため、自分の国を離れた人です。",
+  "亡命": "政治的な理由などで、自分の国から別の国へ逃げて暮らすことです。",
+  "ミサイル": "遠くの目標へ飛ばして攻撃する兵器です。",
+  "軍事演習": "実際の戦闘に備えて、軍隊が行う訓練です。",
+  "有事": "戦争や大きな武力衝突など、国の安全が脅かされる緊急事態です。",
+  "首脳会談": "国のトップ同士が直接会って話し合うことです。"
+};
+
+function explainTermsWithoutAi(event) {
   event.preventDefault();
   const button = event.currentTarget;
-  const prompt = `次のニュースに出てくる専門用語を、ニュースを初めて読む人にもわかるように説明してください。難しい言葉を避け、各用語を「用語：やさしい説明」の形式で整理してください。\n\n記事タイトル: ${button.dataset.title}\n記事URL: ${button.dataset.url}`;
-  const openClaude = () => window.open("https://claude.ai/new", "_blank", "noopener,noreferrer");
-
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(prompt).then(() => {
-      alert("専門用語の説明依頼をコピーしました。Claudeに貼り付けてください。");
-      openClaude();
-    }).catch(openClaude);
-  } else {
-    window.prompt("この依頼文をClaudeに貼り付けてください:", prompt);
-    openClaude();
-  }
+  const terms = Object.entries(simpleTermDictionary).filter(([term]) => button.dataset.title.includes(term));
+  const message = terms.length
+    ? terms.map(([term, explanation]) => `${term}\n${explanation}`).join("\n\n")
+    : "この見出しには、登録済みの基本用語はありません。";
+  alert(message);
 }
 
 async function loadWorldNews() {
@@ -156,7 +166,7 @@ async function loadWorldNews() {
         <div class="news-actions">
           <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">記事を読む</a>
           <button class="claude-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">Claudeで要約</button>
-          <button class="terms-button" type="button" data-title="${escapeHtml(article.title)}" data-url="${escapeHtml(article.url)}">専門用語をやさしく説明</button>
+          <button class="terms-button" type="button" data-title="${escapeHtml(article.title)}">用語をやさしく説明</button>
         </div>
       </article>
     `).join("");
@@ -182,7 +192,7 @@ document.addEventListener("click", (event) => {
   if (claudeButton) {
     summarizeWithClaude({ currentTarget: claudeButton, preventDefault: () => {} });
   } else if (termsButton) {
-    explainTermsWithClaude({ currentTarget: termsButton, preventDefault: () => {} });
+    explainTermsWithoutAi({ currentTarget: termsButton, preventDefault: () => {} });
   }
 });
 
