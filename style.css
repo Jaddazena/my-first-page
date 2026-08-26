@@ -30,6 +30,22 @@ p {
   background-color: #0d4f83;
 }
 
+.news-button {
+  background-color: #28745a;
+  border-radius: 6px;
+  color: white;
+  display: block;
+  margin: 12px auto 0;
+  padding: 12px 20px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.news-button:hover,
+.news-button:focus-visible {
+  background-color: #1c5541;
+}
+
 .share-area {
   margin-top: 42px;
 }
@@ -129,6 +145,71 @@ p {
   color: #1769aa;
   display: inline-block;
   margin-top: 24px;
+}
+
+.news-page {
+  background-color: #f4f7fa;
+  padding: 48px 20px;
+  text-align: left;
+}
+
+.news-content {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.news-content h1 {
+  color: #1d4d68;
+  text-align: center;
+}
+
+.news-description,
+.news-status {
+  color: #555555;
+  text-align: center;
+}
+
+.news-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.news-card {
+  background-color: white;
+  border-left: 5px solid #28745a;
+  border-radius: 4px;
+  box-shadow: 0 2px 7px #16304218;
+  padding: 18px 20px;
+}
+
+.news-card h2 {
+  color: #173b4d;
+  font-size: 20px;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+.news-meta,
+.original-title,
+.news-source-note {
+  color: #68757b;
+  font-size: 13px;
+}
+
+.news-card a {
+  color: #1769aa;
+  font-weight: bold;
+}
+
+.news-source-note {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.news-error {
+  color: #a32929;
+  text-align: center;
 }
 
 .jackpot-page {
