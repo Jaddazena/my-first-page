@@ -61,25 +61,7 @@ function shareToInstagram(event) {
   }
 }
 
-const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(politics%20OR%20diplomacy%20OR%20military)%20(domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Aapnews.com%20OR%20domain%3Aaljazeera.com%20OR%20domain%3Alemonde.fr%20OR%20domain%3Aelpais.com%20OR%20domain%3Acnn.com)&mode=artlist&maxrecords=20&format=json&sort=HybridRel&timespan=1d";
-
-async function translateHeadline(headline, language) {
-  if (!headline || language === "Japanese") {
-    return headline;
-  }
-
-  try {
-    const response = await fetch("/.netlify/functions/translate", {
-      body: JSON.stringify({ headline, language }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST"
-    });
-    const result = await response.json();
-    return result.translation || headline;
-  } catch {
-    return headline;
-  }
-}
+const newsApiUrl = "https://api.gdeltproject.org/api/v2/doc/doc?query=(政治%20OR%20外交%20OR%20軍事)%20sourcelang%3Ajapanese%20(domain%3Anhk.or.jp%20OR%20domain%3Areuters.com%20OR%20domain%3Abbc.com%20OR%20domain%3Anikkei.com%20OR%20domain%3Aasahi.com%20OR%20domain%3Ayomiuri.co.jp%20OR%20domain%3Amainichi.jp%20OR%20domain%3Akyodonews.jp)&mode=artlist&maxrecords=20&format=json&sort=HybridRel&timespan=1d";
 
 function formatNewsDate(dateText) {
   if (!dateText || dateText.length < 14) {
@@ -105,21 +87,16 @@ async function loadWorldNews() {
     }
 
     const data = await response.json();
-    const articles = (data.articles || []).slice(0, 12);
-    const translatedArticles = await Promise.all(articles.map(async (article) => ({
-      ...article,
-      translatedTitle: await translateHeadline(article.title, article.language)
-    })));
+    const articles = (data.articles || []).filter((article) => article.language === "Japanese").slice(0, 12);
 
-    if (!translatedArticles.length) {
+    if (!articles.length) {
       throw new Error("表示できるニュースがありません");
     }
 
-    newsList.innerHTML = translatedArticles.map((article) => `
+    newsList.innerHTML = articles.map((article) => `
       <article class="news-card">
         <p class="news-meta">${article.domain || "海外メディア"} ・ ${formatNewsDate(article.seendate)}</p>
-        <h2>${article.translatedTitle}</h2>
-        ${article.translatedTitle !== article.title ? `<p class="original-title">原文: ${article.title}</p>` : ""}
+        <h2>${article.title}</h2>
         <a href="${article.url}" target="_blank" rel="noopener noreferrer">記事を読む</a>
       </article>
     `).join("");
