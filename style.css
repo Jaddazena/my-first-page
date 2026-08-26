@@ -284,6 +284,30 @@ p {
   margin: 0;
 }
 
+.news-status-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.news-refresh {
+  background-color: transparent;
+  border: 1px solid #28745a;
+  border-radius: 3px;
+  color: #28745a;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 7px 10px;
+}
+
+.news-refresh:hover,
+.news-refresh:focus-visible {
+  background-color: #e4eee8;
+}
+
 .news-list {
   display: grid;
   gap: 0 22px;

@@ -248,5 +248,10 @@ document.addEventListener("keydown", (event) => {
 
 if (document.querySelector("#news-list")) {
   loadWorldNews();
-  setInterval(loadWorldNews, 30 * 60 * 1000);
+  document.querySelector("#news-refresh")?.addEventListener("click", loadWorldNews);
+  setInterval(() => {
+    if (document.visibilityState === "visible") {
+      loadWorldNews();
+    }
+  }, 30 * 60 * 1000);
 }

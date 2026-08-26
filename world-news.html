@@ -23,7 +23,10 @@
       <p class="news-kicker"><span class="live-dot"></span> WORLD DESK</p>
       <h1>WORLD<br><em>/ NOW</em></h1>
       <p class="news-description">政治・外交・軍事。世界の動きを、いま読む。</p>
-      <p id="news-status" class="news-status" role="status">ニュースを読み込んでいます...</p>
+      <div class="news-status-row">
+        <p id="news-status" class="news-status" role="status">ニュースを読み込んでいます...</p>
+        <button id="news-refresh" class="news-refresh" type="button">今すぐ更新</button>
+      </div>
     </section>
     <section id="news-list" class="news-list" aria-live="polite"></section>
     <footer class="news-footer">
@@ -40,6 +43,6 @@
       <div id="term-dialog-content" class="term-dialog-content"></div>
     </section>
   </div>
-  <script src="script.js?v=glossary-modal"></script>
+  <script src="script.js?v=refresh-control"></script>
 </body>
 </html>
