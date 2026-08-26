@@ -1,0 +1,155 @@
+body {
+  background-color: #f0f8ff;
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 50px;
+}
+
+h1 {
+  color: pink;
+}
+
+p {
+  color: #555555;
+  font-size: 18px;
+}
+
+.nikkei-button {
+  background-color: #1769aa;
+  border-radius: 6px;
+  color: white;
+  display: block;
+  margin: 18px auto 0;
+  padding: 12px 20px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.nikkei-button:hover,
+.nikkei-button:focus-visible {
+  background-color: #0d4f83;
+}
+
+.share-area {
+  margin-top: 42px;
+}
+
+.share-title {
+  color: #555555;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.share-links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.share-link {
+  align-items: center;
+  border-radius: 50%;
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 48px;
+}
+
+.share-link:hover,
+.share-link:focus-visible {
+  box-shadow: 0 5px 12px #0003;
+  transform: translateY(-3px);
+}
+
+.share-link svg {
+  fill: currentColor;
+  height: 25px;
+  width: 25px;
+}
+
+.share-link img {
+  height: 25px;
+  width: 25px;
+}
+
+.line-link {
+  background-color: #06c755;
+  color: white;
+}
+
+.x-link {
+  background-color: #111111;
+  color: white;
+}
+
+.instagram-link {
+  background: linear-gradient(135deg, #feda75, #d62976 55%, #4f5bd5);
+  color: white;
+}
+
+.nikkei-page {
+  background-color: #f4f7fa;
+  padding: 48px 20px;
+}
+
+.nikkei-content {
+  margin: 0 auto;
+  max-width: 720px;
+}
+
+.nikkei-content h1 {
+  color: #1769aa;
+}
+
+.nikkei-content > p {
+  margin-bottom: 24px;
+}
+
+.tradingview-widget-container {
+  background-color: white;
+  border: 1px solid #d8e0e8;
+  border-radius: 6px;
+  min-height: 170px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.tradingview-widget-copyright {
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.tradingview-widget-copyright a {
+  color: #1769aa;
+}
+
+.back-link {
+  color: #1769aa;
+  display: inline-block;
+  margin-top: 24px;
+}
+
+.jackpot-page {
+  background-color: #fff8e7;
+  padding-top: 18vh;
+}
+
+.jackpot-title {
+  color: #e60012;
+  font-size: clamp(4rem, 14vw, 10rem);
+  margin: 0;
+  animation: jackpot-bounce 1.2s ease-in-out infinite;
+  text-shadow: 4px 4px 0 #ffd43b;
+}
+
+@keyframes jackpot-bounce {
+  0%, 100% {
+    transform: scale(0.92) rotate(-2deg);
+  }
+
+  50% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
