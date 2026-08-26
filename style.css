@@ -191,11 +191,19 @@ p {
   align-items: center;
   background: #ef6351;
   display: flex;
-  font-size: 12px;
   height: 30px;
   justify-content: center;
-  letter-spacing: 0;
   width: 34px;
+}
+
+.brand-mark svg {
+  fill: none;
+  height: 25px;
+  stroke: white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  width: 25px;
 }
 
 .news-date,
